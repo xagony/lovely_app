@@ -6,5 +6,10 @@ pipeline {
                 sh 'cd /code & python manage.py test'
             }
         }
+        stage('Upload') {
+            steps {
+                echo 'Pushing stage'
+            }
+        }
     }
 }
