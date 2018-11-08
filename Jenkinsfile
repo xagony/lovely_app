@@ -15,7 +15,7 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    docker.image(registry + ":$BUILD_NUMBER").Run() {
+                    docker.image(registry + ":$BUILD_NUMBER").Run {
                         sh 'cd /code & python manage.py test'
                     }  
                 }
