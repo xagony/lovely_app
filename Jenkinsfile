@@ -3,7 +3,6 @@ pipeline {
     registry = "ipoder2007/lovely"
     registryCredential = 'dockerhub'
   }
-    agent { dockerfile true }
     stages {
         stage('Test') {
             steps {
