@@ -21,7 +21,7 @@ pipeline {
                 }
             }
         }
-        stage('Test') {
+        stage('Pull image') {
             steps {
                 script {
                     docker.withRegistry( ‘’, registryCredential ) {
