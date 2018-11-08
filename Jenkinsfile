@@ -7,17 +7,12 @@ pipeline {
     stages {
         stage('Build Image') {
             steps {
-                script {
-                    docker.build registry + ":$BUILD_NUMBER"
-                }
-            }
-        }
-        stage('Test') {
-            steps {
-                script {
-                    docker.image(registry + ":$BUILD_NUMBER").Run {
+                node {
+                    def customImage = docker.build(registry + ":$BUILD_NUMBER")
+
+                    customImage.inside {
                         sh 'cd /code & python manage.py test'
-                    }  
+                    }
                 }
             }
         }
