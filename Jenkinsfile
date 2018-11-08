@@ -1,4 +1,8 @@
 pipeline {
+  environment {
+    registry = "ipoder2007/lovely"
+    registryCredential = 'dockerhub'
+  }
     agent { dockerfile true }
     stages {
         stage('Test') {
@@ -8,7 +12,9 @@ pipeline {
         }
         stage('Upload') {
             steps {
-                echo 'Pushing stage'
+                script {
+                    docker.build registry + ":$BUILD_NUMBER"
+                }
             }
         }
     }
