@@ -1,28 +1,20 @@
 pipeline {
-  environment {
-    registry = "ipoder2007/lovely"
-    registryCredential = 'dockerhub'
-  }
-    agent any
-    stages {
-        stage('Build Image') {
-            steps {
-                node {
-                    def customImage = docker.build(registry + ":$BUILD_NUMBER")
 
-                    customImage.inside {
-                        sh 'cd /code & python manage.py test'
-                    }
-                }
+    agent { 
+        dockerfile true 
+    }
+
+
+    stages {
+        stage('test') {
+            steps {
+                echo 'Running app tests'
+                sh 'cd /code & python manage.py test'
             }
         }
-        stage('Pull image') {
+        stage('push') {
             steps {
-                script {
-                    docker.withRegistry( ‘’, registryCredential ) {
-                      dockerImage.push()
-                    }
-                }
+                echo 'Pushing to docker hub'
             }
         }
     }
